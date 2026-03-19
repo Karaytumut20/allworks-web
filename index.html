@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Allworks | Premium E-Commerce Brand</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #0F2027;     
+            --secondary: #203A43;   
+            --accent: #2C5364;
+            --text-dark: #121212;
+            --bg-light: #fdfdfd;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+            overflow-x: hidden;
+        }
+
+        /* --- Global Scroll Animations --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(60px) scale(0.95);
+            transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+
+        /* --- Navbar --- */
+        .navbar {
+            padding: 25px 0;
+            transition: all 0.4s ease;
+            background: transparent;
+        }
+        .navbar.scrolled {
+            background: rgba(253, 253, 253, 0.98);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+            padding: 15px 0;
+            backdrop-filter: blur(10px);
+        }
+        .navbar-brand {
+            font-weight: 900;
+            font-size: 1.8rem;
+            color: #fff !important;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .navbar.scrolled .navbar-brand {
+            color: var(--primary) !important;
+        }
+        .nav-link {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.8) !important;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 0 15px;
+            position: relative;
+        }
+        .navbar.scrolled .nav-link {
+            color: var(--secondary) !important;
+        }
+        .navbar.scrolled .nav-link:hover,
+        .navbar.scrolled .nav-link.active {
+            color: var(--primary) !important;
+        }
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            width: 0%;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::before, .nav-link.active::before {
+            width: 100%;
+        }
+        .navbar-toggler {
+            border: none;
+            color: #fff;
+        }
+        .navbar.scrolled .navbar-toggler {
+            color: var(--primary);
+            background: transparent;
+        }
+
+        /* --- Typography Hero Section (No Images) --- */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            background: linear-gradient(-45deg, #0F2027, #203A43, #2C5364, #0F2027);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: #fff;
+        }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Floating CSS Shapes in Background */
+        .shape {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+        .shape-1 { width: 400px; height: 400px; top: -100px; left: -100px; animation-duration: 25s; }
+        .shape-2 { width: 600px; height: 600px; bottom: -200px; right: -100px; animation-duration: 30s; animation-direction: reverse; }
+        .shape-3 { width: 200px; height: 200px; top: 40%; left: 60%; animation-duration: 15s; }
+
+        @keyframes float {
+            0% { transform: rotate(0deg) translate(50px) rotate(0deg); }
+            100% { transform: rotate(360deg) translate(50px) rotate(-360deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Text Reveal Animation */
+        .text-reveal-wrapper {
+            overflow: hidden;
+            display: inline-block;
+        }
+        .text-reveal {
+            display: inline-block;
+            transform: translateY(110%);
+            animation: slideUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+        @keyframes slideUp {
+            to { transform: translateY(0); }
+        }
+
+        .hero h1 {
+            font-size: 5.5rem;
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -2px;
+            margin-bottom: 2rem;
+        }
+        .hero p {
+            font-size: 1.4rem;
+            font-weight: 300;
+            max-width: 700px;
+            opacity: 0;
+            animation: fadeIn 1s ease 1s forwards;
+            line-height: 1.8;
+            color: rgba(255,255,255,0.9);
+        }
+        .hero-btn {
+            display: inline-block;
+            padding: 20px 45px;
+            background: #fff;
+            color: var(--primary);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-top: 2rem;
+            opacity: 0;
+            animation: fadeIn 1s ease 1.3s forwards;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .hero-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 0; height: 100%;
+            background: var(--accent);
+            z-index: -1;
+            transition: width 0.4s ease;
+        }
+        .hero-btn:hover::before { width: 100%; }
+        .hero-btn:hover { color: #fff; box-shadow: 0 15px 30px rgba(0,0,0,0.2); transform: translateY(-3px); }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Section Styling --- */
+        .section-padding { padding: 150px 0; }
+        
+        .huge-text {
+            font-size: clamp(3rem, 5vw, 5rem);
+            font-weight: 900;
+            color: var(--primary);
+            line-height: 1.1;
+            letter-spacing: -1px;
+        }
+        
+        /* Sliding Marquee text separator */
+        .marquee-wrapper {
+            background: var(--primary);
+            padding: 30px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+        }
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 20s linear infinite;
+        }
+        .marquee-item {
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(255,255,255,0.5);
+            margin: 0 40px;
+            letter-spacing: 3px;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* --- About Section (Typography Focus) --- */
+        .about-text-lead {
+            font-size: 1.8rem;
+            font-weight: 300;
+            color: var(--secondary);
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        .about-text-body {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+            color: #555;
+        }
+
+        /* --- Stats (Numbers Animation) --- */
+        .stats-container {
+            background: var(--bg-light);
+            border-top: 1px solid rgba(0,0,0,0.05);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .stat-box {
+            padding: 60px 20px;
+            text-align: center;
+            border-right: 1px solid rgba(0,0,0,0.05);
+            transition: background 0.4s;
+        }
+        .stat-box:last-child { border-right: none; }
+        .stat-box:hover { background: #fff; }
+        .stat-number {
+            font-size: 4.5rem;
+            font-weight: 900;
+            color: var(--primary);
+            line-height: 1;
+            margin-bottom: 15px;
+        }
+        .stat-label {
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent);
+        }
+
+        /* --- Expertise Section (Icon Centric) --- */
+        .expertise-card {
+            background: #fff;
+            padding: 60px 40px;
+            height: 100%;
+            border-radius: 0;
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: all 0.5s ease;
+            position: relative;
+            z-index: 1;
+        }
+        .expertise-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 0;
+            background: var(--primary);
+            transition: height 0.5s ease;
+            z-index: -1;
+        }
+        .expertise-card:hover::before { height: 100%; }
+        
+        .icon-huge {
+            font-size: 4rem;
+            color: var(--accent);
+            margin-bottom: 30px;
+            transition: color 0.5s;
+        }
+        .expertise-card:hover .icon-huge,
+        .expertise-card:hover h3,
+        .expertise-card:hover p {
+            color: #fff;
+        }
+        .expertise-card h3 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            transition: color 0.5s;
+        }
+        .expertise-card p {
+            font-size: 1.1rem;
+            color: #666;
+            line-height: 1.8;
+            transition: color 0.5s;
+        }
+
+        /* --- Values Section --- */
+        .value-block {
+            padding: 40px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+        .value-block:first-child { border-top: 1px solid rgba(0,0,0,0.1); }
+        .value-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--accent);
+            opacity: 0.5;
+        }
+        .value-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+        .value-desc {
+            font-size: 1.2rem;
+            color: #555;
+            line-height: 1.7;
+        }
+
+        /* --- Contact Matrix --- */
+        .contact-section {
+            background: var(--primary);
+            color: #fff;
+            text-align: center;
+        }
+        .contact-info-card {
+            padding: 40px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.4s;
+        }
+        .contact-info-card:hover {
+            background: rgba(255,255,255,0.05);
+            transform: translateY(-10px);
+        }
+        .c-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        /* --- Footer --- */
+        .footer {
+            background: #0a1519; /* Darker than primary */
+            padding: 60px 0 30px;
+            color: rgba(255,255,255,0.6);
+        }
+        .footer-brand {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #fff;
+            letter-spacing: 2px;
+        }
+
+        @media (max-width: 991px) {
+            .hero h1 { font-size: 3.5rem; }
+            .hero p { font-size: 1.1rem; }
+            .navbar { background: var(--primary); padding: 15px 0; }
+            .navbar-collapse {
+                background: var(--primary);
+                padding: 20px;
+                border-top: 1px solid rgba(255,255,255,0.1);
+                margin-top: 15px;
+            }
+            .stat-box { border-right: none; border-bottom: 1px solid rgba(0,0,0,0.05); }
+        }
+    </style>
+</head>
+<body id="home" data-bs-spy="scroll" data-bs-target="#mainNav" data-bs-offset="100">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="#home">ALLWORKS.</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive">
+                <i class="bi bi-list fs-1 text-white"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#expertise">Expertise</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#values">Values</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Typography Hero -->
+    <header class="hero">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        
+        <div class="container hero-content">
+            <div class="row">
+                <div class="col-lg-10">
+                    <h1 class="text-uppercase">
+                        <div class="text-reveal-wrapper"><span class="text-reveal" style="animation-delay: 0.2s">Excellence</span></div><br>
+                        <div class="text-reveal-wrapper"><span class="text-reveal" style="animation-delay: 0.4s">In Every</span></div><br>
+                        <div class="text-reveal-wrapper"><span class="text-reveal" style="animation-delay: 0.6s">Endeavor.</span></div>
+                    </h1>
+                    <p>Headquartered in the USA, Allworks is a powerful e-commerce brand dedicated to bringing unparalleled quality and reliability strictly to the global market. We deliver premium products without compromise.</p>
+                    <a href="#about" class="hero-btn">Explore Allworks</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Marquee Separator -->
+    <div class="marquee-wrapper">
+        <div class="marquee-content">
+            <span class="marquee-item">Global Delivery</span>
+            <span class="marquee-item">Premium Retail</span>
+            <span class="marquee-item">Quality Assured</span>
+            <span class="marquee-item">E-Commerce Excellence</span>
+            <span class="marquee-item">Global Delivery</span>
+            <span class="marquee-item">Premium Retail</span>
+            <span class="marquee-item">Quality Assured</span>
+            <span class="marquee-item">E-Commerce Excellence</span>
+        </div>
+    </div>
+
+    <!-- About Section (Typography led) -->
+    <section id="about" class="section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 mb-5 mb-lg-0 reveal">
+                    <div class="text-uppercase fw-bold text-muted letter-spacing-2 mb-3">Who We Are</div>
+                    <h2 class="huge-text">Defining<br>Modern<br>Retail.</h2>
+                </div>
+                <div class="col-lg-7 reveal delay-1">
+                    <p class="about-text-lead fw-bold">Allworks is a premier US-based corporation specializing in comprehensive e-commerce and retail solutions.</p>
+                    <p class="about-text-body mb-4">We believe in building lasting relationships through integrity, operational excellence, and an unwavering commitment to quality. Our infrastructure allows us to adapt to dynamic market needs while maintaining the highest industry standards.</p>
+                    <p class="about-text-body">By focusing fundamentally on product excellence and customer satisfaction, we set the benchmark for online retail platforms and corporate delivery chains worldwide.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats (pure numbers) -->
+    <section class="stats-container reveal">
+        <div class="container-fluid p-0">
+            <div class="row g-0" id="counter-box">
+                <div class="col-lg-3 col-md-6 stat-box">
+                    <div class="stat-number"><span class="counter" data-target="15">0</span>+</div>
+                    <div class="stat-label">Years of Excellence</div>
+                </div>
+                <div class="col-lg-3 col-md-6 stat-box">
+                    <div class="stat-number"><span class="counter" data-target="50">0</span>+</div>
+                    <div class="stat-label">Countries Reached</div>
+                </div>
+                <div class="col-lg-3 col-md-6 stat-box">
+                    <div class="stat-number"><span class="counter" data-target="250">0</span>+</div>
+                    <div class="stat-label">Global Partners</div>
+                </div>
+                <div class="col-lg-3 col-md-6 stat-box">
+                    <div class="stat-number"><span class="counter" data-target="100">0</span>%</div>
+                    <div class="stat-label">Quality Assured</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Expertise Section -->
+    <section id="expertise" class="section-padding bg-light">
+        <div class="container">
+            <div class="row mb-5 reveal">
+                <div class="col-12 text-center">
+                    <h2 class="huge-text mb-4">Our Expertise</h2>
+                    <p class="lead text-muted max-w-700 mx-auto">Comprehensive e-commerce strategies tailored for modern international trade.</p>
+                </div>
+            </div>
+            
+            <div class="row g-0 reveal delay-1">
+                <div class="col-lg-4">
+                    <div class="expertise-card">
+                        <i class="bi bi-box-seam icon-huge"></i>
+                        <h3>Global Sourcing</h3>
+                        <p>We leverage an extensive network of verified suppliers to procure the highest-grade materials while mitigating supply chain risks.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="expertise-card border-start-0 border-end-0">
+                        <i class="bi bi-truck icon-huge"></i>
+                        <h3>Swift Logistics</h3>
+                        <p>End-to-end management ensuring that your products are delivered safely, cost-effectively, and strictly on schedule, globally.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="expertise-card">
+                        <i class="bi bi-shield-check icon-huge"></i>
+                        <h3>Quality Control</h3>
+                        <p>Rigorous auditing and continuous assessment protocols that guarantee every item operates seamlessly under our strict standards.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section id="values" class="section-padding">
+        <div class="container">
+            <div class="row mb-5 reveal">
+                <div class="col-12">
+                    <h2 class="huge-text">Core<br>Principles.</h2>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-12">
+                    
+                    <div class="value-block reveal">
+                        <div class="row align-items-center">
+                            <div class="col-md-1 text-center"><span class="value-number">01</span></div>
+                            <div class="col-md-3"><h3 class="value-title mb-0">Integrity</h3></div>
+                            <div class="col-md-8"><p class="value-desc mb-0 mt-3 mt-md-0">We conduct our business with the highest ethical standards, ensuring transparent and honest practices in every operation and transaction.</p></div>
+                        </div>
+                    </div>
+                    
+                    <div class="value-block reveal delay-1">
+                        <div class="row align-items-center">
+                            <div class="col-md-1 text-center"><span class="value-number">02</span></div>
+                            <div class="col-md-3"><h3 class="value-title mb-0">Quality</h3></div>
+                            <div class="col-md-8"><p class="value-desc mb-0 mt-3 mt-md-0">Every process and product is thoroughly vetted to consistently meet strict American and international quality benchmarks.</p></div>
+                        </div>
+                    </div>
+
+                    <div class="value-block reveal delay-2">
+                        <div class="row align-items-center">
+                            <div class="col-md-1 text-center"><span class="value-number">03</span></div>
+                            <div class="col-md-3"><h3 class="value-title mb-0">Reach</h3></div>
+                            <div class="col-md-8"><p class="value-desc mb-0 mt-3 mt-md-0">Based in the United States, we leverage our robust global networks to deliver localized, impactful, and fundamentally efficient retail solutions.</p></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section-padding contact-section">
+        <div class="container">
+            <div class="row mb-5 reveal">
+                <div class="col-12 text-center">
+                    <h2 class="huge-text text-white mb-4">Get In Touch.</h2>
+                    <p class="lead text-white-50">Connect with our corporate team to explore collaboration opportunities.</p>
+                </div>
+            </div>
+            
+            <div class="row g-4 justify-content-center reveal delay-1">
+                <div class="col-lg-4 col-md-6">
+                    <div class="contact-info-card h-100">
+                        <i class="bi bi-buildings c-icon"></i>
+                        <h4 class="fw-bold mb-2">United States HQ</h4>
+                        <p class="text-white-50 mb-0">Suite 100, Business District<br>New York, NY 10001</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="contact-info-card h-100">
+                        <i class="bi bi-envelope-at c-icon"></i>
+                        <h4 class="fw-bold mb-2">Email Support</h4>
+                        <p class="text-white-50 mb-0">corporate@allworks.com</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="contact-info-card h-100">
+                        <i class="bi bi-telephone c-icon"></i>
+                        <h4 class="fw-bold mb-2">Phone</h4>
+                        <p class="text-white-50 mb-0">+1 (555) 012-3456</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer text-center">
+        <div class="container">
+            <div class="footer-brand mb-4">ALLWORKS.</div>
+            <p class="mb-4 max-w-600 mx-auto">Excellence in Every Endeavor. Headquartered in the USA, dedicated to bringing unparalleled quality and reliability to the global e-commerce infrastructure.</p>
+            <p class="mb-0 text-white-50 font-monospace small">&copy; 2026 ALLWORKS INC. ALL RIGHTS RESERVED.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Animations & Interactivity -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // 1. Navbar Scroll Effect
+            const navbar = document.getElementById('mainNav');
+            const onScroll = () => {
+                if (window.scrollY > 50) navbar.classList.add('scrolled');
+                else navbar.classList.remove('scrolled');
+            };
+            window.addEventListener('scroll', onScroll);
+            onScroll();
+
+            // 2. Smooth Scroll
+            document.querySelectorAll('a.nav-link[href^="#"], a.navbar-brand[href^="#"], .hero-btn').forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        const navbarCollapse = document.getElementById('navbarResponsive');
+                        if (navbarCollapse.classList.contains('show')) {
+                            bootstrap.Collapse.getInstance(navbarCollapse).hide();
+                        }
+                        
+                        const offset = 80;
+                        const bodyRect = document.body.getBoundingClientRect().top;
+                        const elementRect = targetElement.getBoundingClientRect().top;
+                        const elementPosition = elementRect - bodyRect;
+                        const offsetPosition = elementPosition - offset;
+                        
+                        window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+                    }
+                });
+            });
+
+            // 3. Scroll Reveal Animations
+            const reveals = document.querySelectorAll('.reveal');
+            const revealOptions = { rootMargin: "0px 0px -100px 0px" };
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, revealOptions);
+            reveals.forEach(reveal => revealObserver.observe(reveal));
+
+            // 4. Counter Animation
+            const counters = document.querySelectorAll('.counter');
+            let hasAnimated = false;
+            const runCounters = () => {
+                counters.forEach(counter => {
+                    const target = +counter.getAttribute('data-target');
+                    const duration = 2000;
+                    const increment = target / (duration / 16);
+                    let current = 0;
+                    
+                    const updateCounter = () => {
+                        current += increment;
+                        if (current < target) {
+                            counter.innerText = Math.ceil(current);
+                            requestAnimationFrame(updateCounter);
+                        } else {
+                            counter.innerText = target;
+                        }
+                    };
+                    updateCounter();
+                });
+            };
+
+            const counterSection = document.getElementById('counter-box');
+            if (counterSection) {
+                const counterObserver = new IntersectionObserver((entries) => {
+                    if (entries[0].isIntersecting && !hasAnimated) {
+                        hasAnimated = true;
+                        runCounters();
+                    }
+                }, { threshold: 0.5 });
+                counterObserver.observe(counterSection);
+            }
+
+        });
+    </script>
+</body>
+</html>
